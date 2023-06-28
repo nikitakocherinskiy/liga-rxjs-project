@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SwapiService } from 'src/app/services/swapi.service';
 import { switchMap, map, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { IChar } from 'src/app/models/IChar';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-star-wars',
@@ -29,10 +31,8 @@ export class StarWarsComponent implements OnInit, OnDestroy {
   }
 
   getStarWarsCharacters() {
-    this.swapiService.getStarWarsCharacters().subscribe((response: any) => {
-      this.characters = response.results.map(
-        (character: any) => character.name
-      );
+    this.swapiService.getStarWarsCharacters().subscribe((response: IChar[]) => {
+      this.characters = response.map((character: IChar) => character.name);
     });
   }
 
@@ -40,8 +40,9 @@ export class StarWarsComponent implements OnInit, OnDestroy {
     const filteredCharactersChain = this.swapiService
       .getStarWarsCharacters()
       .pipe(
-        switchMap((response: any) => response.results),
-        map((character: any) => character.name),
+        map((characters: IChar[]) => characters),
+        switchMap((characters: IChar[]) => characters),
+        map((character: IChar) => character.name),
         filter((name: string) => name.startsWith('L'))
       );
 
@@ -55,8 +56,9 @@ export class StarWarsComponent implements OnInit, OnDestroy {
     const lowercaseCharactersChain = this.swapiService
       .getStarWarsCharacters()
       .pipe(
-        switchMap((response: any) => response.results),
-        map((character: any) => character.name.toLowerCase())
+        map((characters: IChar[]) => characters),
+        switchMap((characters: IChar[]) => characters),
+        map((character: IChar) => character.name.toLowerCase())
       );
 
     const subscription = lowercaseCharactersChain.subscribe((name: string) => {
@@ -69,9 +71,9 @@ export class StarWarsComponent implements OnInit, OnDestroy {
     const CharactersWithBlueEyesChain = this.swapiService
       .getStarWarsCharacters()
       .pipe(
-        switchMap((response: any) => response.results),
-        filter((character: any) => character.eye_color.includes('blue')),
-        map((character: any) => character.name)
+        switchMap((response: IChar[]) => response),
+        filter((character: IChar) => character.eye_color.includes('blue')),
+        map((character: IChar) => character.name)
       );
 
     const subscription = CharactersWithBlueEyesChain.subscribe(

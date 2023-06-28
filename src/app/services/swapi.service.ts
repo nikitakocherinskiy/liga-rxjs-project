@@ -10,7 +10,7 @@ import { IChar } from '../models/IChar';
 export class SwapiService {
   constructor(private http: HttpClient) {}
 
-  getStarWarsCharacters(): Observable<Object> {
-    return this.http.get('https://swapi.dev/api/people');
+  getStarWarsCharacters(): Observable<IChar[]> {
+    return this.http.get<IChar[]>('https://swapi.dev/api/people');
   }
 }
