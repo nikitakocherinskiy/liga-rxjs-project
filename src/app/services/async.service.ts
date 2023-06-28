@@ -25,4 +25,28 @@ export class AsyncService {
   //   .catch((error) => {
   //     console.error("Произошла ошибка:", error);
   //   });
+
+  // Задание №3
+  validateEmail(email: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const isValid = email.includes('@');
+        resolve(isValid);
+      }, 2000);
+    });
+  }
+
+  // Пример использования
+  // const inputEmail = "test@example.com";
+  // validateEmail(inputEmail)
+  //   .then((isValid) => {
+  //     if (isValid) {
+  //       console.log("Email валидный");
+  //     } else {
+  //       console.log("Email невалидный");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Произошла ошибка:", error);
+  //   });
 }
