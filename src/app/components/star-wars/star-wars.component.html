@@ -1,4 +1,15 @@
 <h1>Star Wars Characters</h1>
+<h2>Filtered Characters (Names starting with "L")</h2>
 <ul>
-  <li *ngFor="let character of characters">{{ character }}</li>
+  <li *ngFor="let character of filteredCharacters">{{ character }}</li>
+</ul>
+
+<h2>Lowercase Characters</h2>
+<ul>
+  <li *ngFor="let character of lowercaseCharacters">{{ character }}</li>
+</ul>
+
+<h2>Characters With Blue Eyes)</h2>
+<ul>
+  <li *ngFor="let character of CharactersWithBlueEyes">{{ character }}</li>
 </ul>
